@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 
 const POST = async (req:Request) => {
     try {
-        const {items} = await req.json();
+        const {items, tableNo} = await req.json();
         
         const order = await prisma.order.create({
             data: {
-                items: items
+                items: items,
+                tableNo: tableNo
             }
         })
 

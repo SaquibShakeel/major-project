@@ -24,5 +24,6 @@ model Food {
 model Order {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   items Json[]
+  tableNo Int
   timestamp DateTime @default(now())
 }

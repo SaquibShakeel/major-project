@@ -3,9 +3,14 @@ import React from "react";
 import { CartItemInterface, useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import axios from "axios";
+import { usePathname } from "next/navigation";
 
 const Cart = () => {
   const { state } = useCart();
+
+  const pathname = usePathname();
+
+  let tableNo = pathname.split("/")[2];
 
   let totalAmount = 0;
 
@@ -15,7 +20,8 @@ const Cart = () => {
 
   const confirmOrder = () => {
     axios.post("/api/client/order", {
-      items: state.items
+      items: state.items,
+      tableNo: Number(tableNo)
     }).then(res => {
       console.log(res);
       
