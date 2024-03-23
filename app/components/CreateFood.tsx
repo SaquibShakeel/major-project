@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import React, { useState } from "react";
 
 const CreateFood = () => {
@@ -8,8 +9,13 @@ const CreateFood = () => {
   const [type, setType] = useState("Veg");
   const addToInventory = (e: any) => {
     e.preventDefault();
-    console.log(name, price, image, type);
-    
+    axios.post("/api/admin/foods", {
+        name, price:Number(price), image, type
+    }).then((res)=> {
+        console.log(res.data);
+    }).catch(error=> {
+        console.log(error);
+    })
   };
   return (
     <div className="w-full flex items-center justify-center px-20 py-10">
