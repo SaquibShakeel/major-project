@@ -13,7 +13,7 @@ const Navbar = ({tableNo}: NavProps) => {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or Restaurant Name */}
         <Link href="/">
-          <span className="text-white text-lg font-semibold">Restaurant App</span>
+          <span className="text-white text-2xl font-semibold">Restaurant App</span>
         </Link>
 
         {/* Cart and Table Number */}
@@ -24,9 +24,6 @@ const Navbar = ({tableNo}: NavProps) => {
               <FaShoppingCart className='h-6 w-6'/>
             </span>
           </Link>
-
-          {/* Table Number */}
-          {/* <span className="text-white">Table No. {tableNo}</span> */}
         </div>
       </div>
     </nav>
