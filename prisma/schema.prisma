@@ -19,6 +19,9 @@ model Food {
   price Float
   image String
   type String
+  rating Float
+  totalRateResponse Int
+  totalSale Int
 }
 
 model Order {

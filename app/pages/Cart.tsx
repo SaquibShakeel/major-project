@@ -3,12 +3,14 @@ import React from "react";
 import { CartItemInterface, useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import axios from "axios";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Cart = () => {
   const { state } = useCart();
 
   const pathname = usePathname();
+
+  const router = useRouter();
 
   let tableNo = pathname.split("/")[2];
 
@@ -22,9 +24,9 @@ const Cart = () => {
     axios.post("/api/client/order", {
       items: state.items,
       tableNo: Number(tableNo)
-    }).then(res => {
+    }).then((res: any) => {
       console.log(res);
-      
+      router.push(`/order/${res.data.order.id}`)
     })
     
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import AddToCartButton from "./AddToCartButton";
+import { FaStar } from "react-icons/fa";
 
 interface FoodItemProps {
   food: {
@@ -8,11 +9,13 @@ interface FoodItemProps {
     image: string;
     price: number;
     type: string;
+    rating: number;
+    totalRateResponse: number;
+    totalSale: number;
   };
 }
 
 const FoodItem = ({ food }: FoodItemProps) => {
-  
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
       <img
@@ -26,7 +29,12 @@ const FoodItem = ({ food }: FoodItemProps) => {
         <p className="text-gray-600">
           {food.type === "Veg" ? "Vegetarian" : "Non-Vegetarian"}
         </p>
-        <AddToCartButton id={food.id} name={food.name} price={food.price}/>
+        {food.totalRateResponse > 0 && (
+          <p className="text-gray-600 flex items-center justify-start">
+            {food.rating} <FaStar color="#ffe234" /> ({food.totalRateResponse})
+          </p>
+        )}
+        <AddToCartButton id={food.id} name={food.name} price={food.price} />
       </div>
     </div>
   );
