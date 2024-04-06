@@ -8,7 +8,15 @@ const Inventory = () => {
   const [foodInventory, setFoodInventory] = useState([]);
 
   useEffect(()=> {
-    axios.get("/api/client/foods").then((res)=> {
+    axios.get("/api/client/foods", 
+      {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      }
+    ).then((res)=> {
       setFoodInventory(res.data.foods);      
     });
   }, []);
