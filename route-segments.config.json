@@ -1,0 +1,13 @@
+{
+    "segments": [
+      {
+        "route": "/table/[tableNo]",
+        "cache": "none"
+      },
+      {
+        "route": "/api/client/foods",
+        "cache": "none"
+      }
+    ]
+  }
+  
