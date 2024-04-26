@@ -31,7 +31,7 @@ const AdminNav = () => {
           <Link href={`/admin/inventory`}>
             <span className="text-white text-lg">Inventory</span>
           </Link>
-          <button onClick={logout}>Logout</button>
+          <button className='text-red-300' onClick={logout}>Logout</button>
         </div>
       </div>
     </nav>
