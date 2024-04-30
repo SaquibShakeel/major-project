@@ -9,7 +9,7 @@ interface NavProps {
 const Navbar = ({tableNo}: NavProps) => {
     
   return (
-    <nav className="bg-gray-800 py-4 px-20">
+    <nav className="bg-gray-800 py-4 lg:px-20 px-10">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo or Restaurant Name */}
         <Link href="/">

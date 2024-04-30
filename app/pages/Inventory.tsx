@@ -8,22 +8,26 @@ const Inventory = () => {
   const [foodInventory, setFoodInventory] = useState([]);
 
   useEffect(()=> {
-    axios.get("/api/client/foods", 
-      {
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-        },
-      }
-    ).then((res)=> {
-      setFoodInventory(res.data.foods);      
-    });
+
+    const fetchData = async () => {
+      const res = await fetch("/api/client/foods", 
+        {
+          cache: 'no-store'
+        }
+      )
+
+      const data = await res.json();
+
+      setFoodInventory(data?.foods);
+      
+    }
+
+    fetchData();    
   }, []);
 
   return (
-    <div className="w-full flex items-start justify-center px-20">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="w-full flex items-start justify-center lg:px-20 px-10">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         {foodInventory.map((food, index) => (
             <FoodItem key={index} food={food} />
         ))}

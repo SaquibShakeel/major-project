@@ -46,7 +46,7 @@ const OrderPage = ({ orderId }: OrderPageProps) => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center h-screen">
-      <div className="w-[60%] bg-black dark:bg-white ring-1 ring-gray-700 rounded-md px-10 py-5 backdrop-blur-2xl backdrop-filter bg-opacity-20 dark:bg-opacity-10 flex flex-col items-center justify-start">
+      <div className="md:w-[60%] w-[90%] bg-black dark:bg-white ring-1 ring-gray-700 rounded-md md:px-10 px-4 py-5 backdrop-blur-2xl backdrop-filter bg-opacity-20 dark:bg-opacity-10 flex flex-col items-center justify-start">
         <h1 className="text-3xl font-semibold text-center">Please leave a feedback</h1>
         <p className="font-extralight text-center">Help us to tailor our services to meet your needs</p>
         <div className="flex flex-col items-center justify-center w-full gap-1 mt-4">

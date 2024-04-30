@@ -32,7 +32,7 @@ const Cart = () => {
   }
   return (
     <div className="flex flex-col items-center justify-start py-10">
-      <div className="bg-gray-400 bg-opacity-40 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-lg p-5 flex flex-col items-center justify-start w-[60%]">
+      <div className="bg-gray-400 bg-opacity-40 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-lg p-5 flex flex-col items-center justify-start md:w-[60%] w-[90%]">
         <h2 className="font-semibold text-2xl">Cart</h2>
         <hr className="w-full my-2" />
         {state.items.map((item: CartItemInterface, index: number) => (
