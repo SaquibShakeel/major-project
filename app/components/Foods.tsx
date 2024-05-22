@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import FoodItem from "./FoodItem";
 
 interface Food {
   id: string;

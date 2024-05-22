@@ -8,7 +8,6 @@ const Inventory = () => {
   const [foodInventory, setFoodInventory] = useState([]);
 
   useEffect(()=> {
-
     const fetchData = async () => {
       const res = await fetch("/api/client/foods")
 
@@ -19,7 +18,7 @@ const Inventory = () => {
     }
 
     fetchData();    
-  }, []);
+  }, [foodInventory]);
 
   return (
     <div className="w-full flex items-start justify-center lg:px-20 px-10">
