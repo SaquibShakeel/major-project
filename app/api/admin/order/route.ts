@@ -31,7 +31,32 @@ const DELETE = async (req: Request) => {
     }
 }
 
+const PATCH = async (req: Request) => {
+    try {
+        const {id} = await req.json();
+
+        console.log("fgh", id);
+        
+
+        if(!id) {
+            return NextResponse.json({message: "Invalid data"}, {status: 422});
+        }
+        const order = await prisma.order.update({
+            where: {id: id},
+            data: {
+                isCompleted: true
+            }
+        })
+
+        return NextResponse.json({message: "Status changed to completed"}, {status: 200})
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({message: "Server error"}, {status: 500});
+    }
+}
+
 module.exports = {
     GET,
+    PATCH,
     DELETE
 }

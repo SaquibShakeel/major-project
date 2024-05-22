@@ -33,7 +33,7 @@ const OrderPage = ({ orderId }: OrderPageProps) => {
       });
   };
 
-  useEffect(() => {
+  const fetchOrderData = () => {
     axios
       .get(`/api/client/order?orderId=${orderId}`)
       .then((res: any) => {
@@ -42,10 +42,23 @@ const OrderPage = ({ orderId }: OrderPageProps) => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }
+  
+  useEffect(() => {
+    fetchOrderData();
+  }, []);  
+
+  let pollStatusInterval = setInterval(() => {
+    if(order?.isCompleted) {
+      clearInterval(pollStatusInterval);
+    }
+
+    fetchOrderData();
+  }, 10000);
 
   return (
     <div className="w-full flex flex-col items-center justify-center h-screen">
+      <h1 className="text-2xl text-center mb-2">Your order is {order?.isCompleted ? "completed" : "in progress"}</h1>
       <div className="md:w-[60%] w-[90%] bg-black dark:bg-white ring-1 ring-gray-700 rounded-md md:px-10 px-4 py-5 backdrop-blur-2xl backdrop-filter bg-opacity-20 dark:bg-opacity-10 flex flex-col items-center justify-start">
         <h1 className="text-3xl font-semibold text-center">Please leave a feedback</h1>
         <p className="font-extralight text-center">Help us to tailor our services to meet your needs</p>

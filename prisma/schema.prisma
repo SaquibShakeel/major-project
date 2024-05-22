@@ -28,5 +28,6 @@ model Order {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   items Json[]
   tableNo Int
+  isCompleted Boolean @default(false)
   timestamp DateTime @default(now())
 }
