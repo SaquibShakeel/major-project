@@ -7,6 +7,9 @@ interface PageProps {
   };
 }
 
+export const dynamic='force-dynamic';
+export const revalidate = 5;
+
 const page = ({ params }: PageProps) => {
   const { tableNo } = params;
   return (

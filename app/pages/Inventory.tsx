@@ -10,11 +10,7 @@ const Inventory = () => {
   useEffect(()=> {
 
     const fetchData = async () => {
-      const res = await fetch("/api/client/foods", 
-        {
-          cache: 'no-store'
-        }
-      )
+      const res = await fetch("/api/client/foods")
 
       const data = await res.json();
 
