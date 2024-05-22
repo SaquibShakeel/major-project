@@ -27,7 +27,7 @@ const Orders = () => {
         axios.get("/api/admin/order").then(res => {
             setOrders(res.data.orders);
         })
-    }, []);
+    }, [orders]);
 
   return (
     <div className='flex items-start justify-center w-full px-20'>
