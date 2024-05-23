@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext';
+import { toast } from 'react-toastify';
 
 interface AddToCartButtonProps {
     id: string;
@@ -20,6 +21,7 @@ const AddToCartButton = ({id, name, price} : AddToCartButtonProps) => {
       quantity: quantity,
       price: price,
     })
+    toast("Item added to the cart")
   }
   return (
     <div className="flex items-center justify-between mt-4">

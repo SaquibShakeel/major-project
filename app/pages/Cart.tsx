@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { CartItemInterface, useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
+import LoadingIcon from "../components/LoadingIcon";
 
 const Cart = () => {
+  const [loading, setLoading] = useState(false);
   const { state } = useCart();
 
   const pathname = usePathname();
@@ -21,14 +23,16 @@ const Cart = () => {
   });
 
   const confirmOrder = () => {
+    setLoading(true);
     axios.post("/api/client/order", {
       items: state.items,
       tableNo: Number(tableNo)
     }).then((res: any) => {
       console.log(res);
+      setLoading(false);
       router.push(`/order/${res.data.order.id}`)
     })
-    
+    setLoading(false);
   }
   return (
     <div className="flex flex-col items-center justify-start py-10">
@@ -50,7 +54,7 @@ const Cart = () => {
       </div>
       <div className="flex items-center justify-center p-4">
         <button className="rounded-md py-3 px-4 text-xl bg-blue-400 text-gray-100 font-bold hover:bg-blue-500" onClick={confirmOrder}>
-          Confirm Order
+          {loading ? <LoadingIcon/> : "Confirm Order"}
         </button>
       </div>
     </div>

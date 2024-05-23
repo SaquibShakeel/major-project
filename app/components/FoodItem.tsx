@@ -19,7 +19,7 @@ const FoodItem = ({ food }: FoodItemProps) => {
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
       <img
-        className="w-full h-48 object-cover"
+        className="w-80 h-48 object-cover"
         src={food.image}
         alt={food.name}
       />

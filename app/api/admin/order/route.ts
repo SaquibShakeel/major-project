@@ -13,7 +13,6 @@ const GET = async () => {
 
 const DELETE = async (req: Request) => {
     try {
-        console.log("gdcfbhj");
         
         const {id} = await req.json();
         console.log(id);
@@ -34,9 +33,6 @@ const DELETE = async (req: Request) => {
 const PATCH = async (req: Request) => {
     try {
         const {id} = await req.json();
-
-        console.log("fgh", id);
-        
 
         if(!id) {
             return NextResponse.json({message: "Invalid data"}, {status: 422});

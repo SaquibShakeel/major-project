@@ -51,7 +51,7 @@ const Inventory = () => {
   }, [foodInventory]);
 
   return (
-    <div>
+    <div className="w-full flex items-start justify-start flex-col">
       <div className="w-full flex items-start justify-center lg:px-20 px-10 pt-6 pb-3 font-semibold border-b-8">
         Top Rated 🌟
       </div>

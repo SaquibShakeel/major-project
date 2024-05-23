@@ -26,6 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.Toastify__progress-bar--default {
+  background: green !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
