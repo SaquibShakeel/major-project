@@ -157,13 +157,17 @@ function countdaywisePrice(
       lower_limit_date.setDate(lower_limit_date.getDate()-7);
       console.log(lower_limit_date);
     }
-
+  
     if(orderDate<lower_limit_date){
       continue;
     }
     for (const item of order.items) {
       const prevPrice = daymap.get(formattedDate) || 0;
       daymap.set(formattedDate, prevPrice + item.quantity * item.price);
+    }
+
+    for(const [key,value] of daymap){
+      console.log("t"+key);
     }
   }
 
