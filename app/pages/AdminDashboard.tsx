@@ -3,7 +3,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import Chartcap from "../components/Chartcap";
-import { calculatePrice, countItemsOrdered } from "../../helpers/filterfunctions";
+import {
+  calculatePrice,
+  countItemsOrdered,
+  countdaywisePrice,
+} from "../../helpers/filterfunctions";
 
 type fooddatatype = [string, number | string][];
 
@@ -12,9 +16,16 @@ export const options = {
   is3D: true,
 };
 
+const linechartoptions = {
+  title: "Daywise sales",
+  curveType: "function",
+  legend: { position: "bottom" },
+};
+
 const AdminDashboard = () => {
   const [selectedValue, setSelectedValue] = useState<any>(null);
   const [filtertype, setfiltertype] = useState(1);
+  const [selectedValue2, setSelectedValue2] = useState(3);
   const [startDate, setstartDate] = useState<any>(null);
   const [endDate, setendDate] = useState<any>(null);
 
@@ -25,11 +36,22 @@ const AdminDashboard = () => {
     );
   };
 
+  const handleSelectChange2 = (event: any) => {
+    setSelectedValue2(parseInt(event.target.value));
+  };
+
   const [orders, setOrders] = useState([]);
   const prevfooddata: fooddatatype = [["Dish Name", "No of orders"]];
-  const prevpricedata: fooddatatype = [["Dish Name", "revenue generated in ₹"]];
+  const prevpricedata: fooddatatype = [["Dish Name", "Sales in ₹"]];
+  const prevdaydata: fooddatatype = [["Date", "Sales"]];
   const fillfooddata = () => {
-    const itemCounts = countItemsOrdered(orders, selectedValue, filtertype, startDate, endDate);
+    const itemCounts = countItemsOrdered(
+      orders,
+      selectedValue,
+      filtertype,
+      startDate,
+      endDate
+    );
     for (const [key, value] of itemCounts) {
       prevfooddata.push([key, value]);
     }
@@ -37,22 +59,39 @@ const AdminDashboard = () => {
   };
 
   const fillpricedata = () => {
-    const itemCounts = calculatePrice(orders, selectedValue, filtertype, startDate, endDate);
+    const itemCounts = calculatePrice(
+      orders,
+      selectedValue,
+      filtertype,
+      startDate,
+      endDate
+    );
     for (const [key, value] of itemCounts) {
       prevpricedata.push([key, value]);
     }
     setpricedata(prevpricedata);
   };
+
+  const filldaydata = () => {
+    const itemCounts = countdaywisePrice(orders, selectedValue2);
+
+    for (const [key, value] of itemCounts) {
+      prevdaydata.push([key, value]);
+    }
+    setdaydata(prevdaydata);
+  };
+
   const [fooddata, setfooddata] = useState<fooddatatype>();
 
   const [pricedata, setpricedata] = useState<fooddatatype>();
 
+  const [daydata, setdaydata] = useState<fooddatatype>();
+
   const handleFilterSubmit = (e: any) => {
     e.preventDefault();
-    if (startDate == null || endDate == null || endDate<startDate) {
+    if (startDate == null || endDate == null || endDate < startDate) {
       alert("Please enter valid startDate and endDate");
-    }
-    else{
+    } else {
       setfiltertype(2);
       fillfooddata();
       fillpricedata();
@@ -76,6 +115,10 @@ const AdminDashboard = () => {
     fillfooddata();
     fillpricedata();
   }, [orders, selectedValue]);
+
+  useEffect(() => {
+    filldaydata();
+  }, [orders, selectedValue2]);
 
   return (
     <div>
@@ -102,11 +145,21 @@ const AdminDashboard = () => {
                   className="px-2 py-1 border-none ring-1 ring-blue-500 focus:border-none focus:outline-none rounded bg-transparent"
                   onChange={handleSelectChange}
                 >
-                  <option className="bg-gray-700 text-white" value="0">None</option>
-                  <option className="bg-gray-700 text-white" value="1">This Year</option>
-                  <option className="bg-gray-700 text-white" value="2">This Month</option>
-                  <option className="bg-gray-700 text-white" value="3">Last 7 days</option>
-                  <option className="bg-gray-700 text-white" value="4">Today</option>
+                  <option className="bg-gray-700 text-white" value="0">
+                    None
+                  </option>
+                  <option className="bg-gray-700 text-white" value="1">
+                    This Year
+                  </option>
+                  <option className="bg-gray-700 text-white" value="2">
+                    This Month
+                  </option>
+                  <option className="bg-gray-700 text-white" value="3">
+                    Last 7 days
+                  </option>
+                  <option className="bg-gray-700 text-white" value="4">
+                    Today
+                  </option>
                 </select>
               </div>
             </div>
@@ -148,9 +201,7 @@ const AdminDashboard = () => {
             </form>
           </div>
         </div>
-        <p className="font-bold underline text-2xl my-3 mt-9">
-          No of orders
-        </p>
+        <p className="font-bold underline text-2xl my-3 mt-9">No of orders</p>
         <div className="no-of-orders flex flex-row">
           <div className="food-order mx-10">
             <Chartcap>
@@ -202,6 +253,64 @@ const AdminDashboard = () => {
               />
             </Chartcap>
           </div>
+        </div>
+      </div>
+
+      <div
+        className="flex justify-center"
+        style={{ alignItems: "center", margin: "auto" }}
+      >
+        <div
+          className="selection my-5 mx-5 rounded-md bg-white bg-opacity-20 p-5 backdrop-filter backdrop-blur-md shadow-md"
+          style={{
+            display: "inline-block",
+            textAlign: "center",
+            alignContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            className="selection my-5 mx-5 rounded-md bg-white bg-opacity-20 p-5 backdrop-filter backdrop-blur-md shadow-md"
+            style={{
+              display: "inline-block",
+              width: "500px",
+            }}
+          >
+            <p className="font-semibold text-center text-lg">Apply filter</p>
+            <div className="container mx-auto">
+              <div className="flex justify-center mt-8 mb-4">
+                <div className="input-container flex items-center">
+                  <label htmlFor="time-period" className="mr-4">
+                    Select Time Period:
+                  </label>
+                  <select
+                    id="time-period"
+                    className="px-2 py-1 border-none ring-1 ring-blue-500 focus:border-none focus:outline-none rounded bg-transparent"
+                    onChange={handleSelectChange2}
+                  >
+                    <option className="bg-gray-700 text-white" value="1">
+                      This Year
+                    </option>
+                    <option className="bg-gray-700 text-white" value="2">
+                      This Month
+                    </option>
+                    <option className="bg-gray-700 text-white" value="3">
+                      Last 7 days
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Chartcap>
+            <Chart
+              chartType="LineChart"
+              width="100%"
+              height="400px"
+              data={daydata}
+              options={linechartoptions}
+            />
+          </Chartcap>
         </div>
       </div>
     </div>

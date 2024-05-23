@@ -1,4 +1,4 @@
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
 
 function countItemsOrdered(
   orders: any[],
@@ -46,14 +46,16 @@ function countItemsOrdered(
       }
     }
   } else {
-    console.log(startDate+" "+endDate)
+    console.log(startDate + " " + endDate);
     for (const order of orders) {
       const orderDate = new Date(order.timestamp);
-      console.log("order date is "+orderDate);
-      const formattedDate = moment(orderDate).tz('Asia/Kolkata').format('YYYY-MM-DD');
+      console.log("order date is " + orderDate);
+      const formattedDate = moment(orderDate)
+        .tz("Asia/Kolkata")
+        .format("YYYY-MM-DD");
 
-      console.log("order date is "+formattedDate);
-      
+      console.log("order date is " + formattedDate);
+
       if (formattedDate >= startDate && formattedDate <= endDate) {
         console.log("true");
         for (const item of order.items) {
@@ -106,13 +108,14 @@ function calculatePrice(
         priceMap.set(item.name, prevPrice + item.quantity * item.price);
       }
     }
-  }
-  else{
-    for(const order of orders){
+  } else {
+    for (const order of orders) {
       const orderDate = new Date(order.timestamp);
-      const formattedDate = moment(orderDate).tz('Asia/Kolkata').format('YYYY-MM-DD');
+      const formattedDate = moment(orderDate)
+        .tz("Asia/Kolkata")
+        .format("YYYY-MM-DD");
 
-      if(formattedDate>=startDate&&formattedDate<=endDate){
+      if (formattedDate >= startDate && formattedDate <= endDate) {
         console.log("true");
         for (const item of order.items) {
           const prevPrice = priceMap.get(item.name) || 0;
@@ -124,4 +127,45 @@ function calculatePrice(
   return priceMap;
 }
 
-export { countItemsOrdered, calculatePrice };
+function countdaywisePrice(
+  orders: any[],
+  selectedValue: Number
+): Map<string, number> {
+  const daymap = new Map<string, number>();
+  for (const order of orders) {
+    const orderDate = new Date(order.timestamp);
+    const formattedDate = moment(orderDate)
+      .tz("Asia/Kolkata")
+      .format("YYYY-MM-DD");
+
+    // const todaydate = new Date();
+
+    let lower_limit_date = new Date();
+
+    if(selectedValue===1){
+      lower_limit_date.setDate(lower_limit_date.getDate()-365);
+      console.log(lower_limit_date);
+    }
+    else if(selectedValue===2){
+      lower_limit_date.setDate(lower_limit_date.getDate()-30);
+      console.log(lower_limit_date);
+    }
+    else{
+      lower_limit_date.setDate(lower_limit_date.getDate()-7);
+      console.log(lower_limit_date);
+    }
+
+    if(orderDate<lower_limit_date){
+      continue;
+    }
+    for (const item of order.items) {
+      const prevPrice = daymap.get(formattedDate) || 0;
+      daymap.set(formattedDate, prevPrice + item.quantity * item.price);
+    }
+  }
+
+  console.log(daymap);
+  return daymap;
+}
+
+export { countItemsOrdered, calculatePrice, countdaywisePrice };
