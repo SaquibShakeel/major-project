@@ -132,6 +132,9 @@ function countdaywisePrice(
   selectedValue: Number
 ): Map<string, number> {
   const daymap = new Map<string, number>();
+
+  orders.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
   for (const order of orders) {
     const orderDate = new Date(order.timestamp);
     const formattedDate = moment(orderDate)
